@@ -1,3 +1,6 @@
+import Soldier from "../models/soldier";
+
+
 let instance = null;
 
 export default class SoldierFabric {
@@ -15,9 +18,7 @@ export default class SoldierFabric {
     createSoldier(data) {
         return new Soldier(data.health, data.recharge);
     }
-    createSoldiers(arrData){
+    createSoldiers(arrData) {
         return arrData.map(el => this.createSoldier(el));
     }
-    
-    
 }

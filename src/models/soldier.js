@@ -1,23 +1,36 @@
-import Unit from "./unit";
+import { Unit } from "./unit";
+import { random } from "../helper/helper";
 
-export default class Soldier extends Unit {
-    _expirience = 0;
-    
-    set experience(val) {
-        this._experience = val;
-        if (val > 50) {
-            this._experience = 50;
-        } else if (val < 0) {
-            this._experience = 0;
-        }
+export class Soldier extends Unit {
+  _experience = 0;
 
+  constructor(health, recharge) {
+    super(health, recharge);
+  }
+
+  setExperience(value) {
+    if (value >= 50) {
+      return this._experience = 50;
+    } else if (value <= 0) {
+      return this._experience = 0;
+    } else {
+      return this._experience = value;
     }
+  }
 
-    get experience() {
-        return this._experience;
-    }
+  getExperience() {
+    return this._experience;
+  }
 
+  attackSuccess() {
+    return (super.attackSuccess() * random(50 + this._experience, 100)) / 100;
+  }
 
-    //attackSucces()
-    //makeDamage() -----> redefine!!
+  makeDamage() {
+    return super.makeDamage() + this._experience / 100;
+  }
+
+  power() {
+    return Math.round((this._experience + this.health + this.makeDamage()) / 3);
+  }
 }
